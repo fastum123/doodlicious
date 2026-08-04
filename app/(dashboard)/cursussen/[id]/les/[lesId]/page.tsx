@@ -31,17 +31,24 @@ export default async function LesPagina({
 
   if (!magBekijken) {
     return (
-      <div className="mx-auto max-w-3xl px-4 py-20 text-center">
-        <h1 className="text-2xl font-bold text-pink-600 mb-4">Geen toegang</h1>
-        <p className="text-gray-600">Schrijf je in voor deze cursus om deze les te bekijken.</p>
+      <div className="bg-cream-50 min-h-[80vh] flex items-center justify-center px-4 py-20 text-center">
+        <div>
+          <span className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-pink-100 text-3xl mb-4">
+            🔒
+          </span>
+          <h1 className="font-display text-2xl font-semibold text-plum-900 mb-3">Geen toegang</h1>
+          <p className="text-plum-900/60">Schrijf je in voor deze cursus om deze les te bekijken.</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-12">
-      <h1 className="text-2xl font-bold text-pink-600 mb-6">{les.titel}</h1>
-      <VideoPlayer lessonId={les.id} />
+    <div className="bg-cream-50 min-h-screen">
+      <div className="mx-auto max-w-4xl px-4 py-12">
+        <h1 className="font-display text-2xl font-semibold text-plum-900 mb-6">{les.titel}</h1>
+        <VideoPlayer lessonId={les.id} />
+      </div>
     </div>
   );
 }
