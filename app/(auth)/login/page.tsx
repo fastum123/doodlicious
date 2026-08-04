@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase-browser";
 import Link from "next/link";
 
@@ -15,7 +15,6 @@ export default function LoginPage() {
 
 function LoginForm() {
   const supabase = createClient();
-  const router = useRouter();
   const params = useSearchParams();
   const [email, setEmail] = useState("");
   const [wachtwoord, setWachtwoord] = useState("");
@@ -27,13 +26,14 @@ function LoginForm() {
     setBezig(true);
     setFoutmelding(null);
     const { error } = await supabase.auth.signInWithPassword({ email, password: wachtwoord });
-    setBezig(false);
     if (error) {
+      setBezig(false);
       setFoutmelding("E-mailadres of wachtwoord is onjuist.");
       return;
     }
-    router.push(params.get("volgende") || "/cursussen");
-    router.refresh();
+    // Volledige paginaherlading (i.p.v. router.push) zodat het net gezette
+    // sessie-cookie zeker meegaat naar de server voordat de middleware checkt.
+    window.location.href = params.get("volgende") || "/cursussen";
   }
 
   return (
