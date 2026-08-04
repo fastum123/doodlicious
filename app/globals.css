@@ -7,7 +7,35 @@ html {
 }
 
 body {
-  @apply bg-pink-50 text-gray-900;
+  @apply bg-cream-50 text-plum-900;
+}
+
+::selection {
+  @apply bg-pink-200 text-plum-900;
+}
+
+/* Zachte scrollbar in de sfeer van de rest van de site */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #ffb8d9;
+  border-radius: 999px;
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, #d61b71, #f0328a 60%, #fb5fa3);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.pawprint-bg {
+  background-image: radial-gradient(#ffb8d9 1.5px, transparent 1.5px);
+  background-size: 22px 22px;
 }
 
 /* Extra anti-download laag voor de videospeler: geen selectie, geen context-menu look */

@@ -35,31 +35,33 @@ export default function NieuweCursusForm() {
   }
 
   return (
-    <form onSubmit={opslaan} className="space-y-3 bg-white border border-pink-100 rounded-xl p-4">
+    <form onSubmit={opslaan} className="space-y-3 bg-white border border-pink-100 rounded-2xl shadow-card p-5">
       <input
         placeholder="Titel"
         value={titel}
         onChange={(e) => setTitel(e.target.value)}
         required
-        className="w-full rounded-lg border border-pink-200 px-3 py-2"
+        className="w-full rounded-xl border border-pink-200 px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-pink-400 transition"
       />
       <textarea
         placeholder="Beschrijving"
         value={beschrijving}
         onChange={(e) => setBeschrijving(e.target.value)}
-        className="w-full rounded-lg border border-pink-200 px-3 py-2"
+        className="w-full rounded-xl border border-pink-200 px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-pink-400 transition"
       />
       <input
         placeholder="Prijs in euro's, bv. 49.00"
         value={prijs}
         onChange={(e) => setPrijs(e.target.value)}
         required
-        className="w-full rounded-lg border border-pink-200 px-3 py-2"
+        className="w-full rounded-xl border border-pink-200 px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-pink-400 transition"
       />
-      {foutmelding && <p className="text-sm text-red-600">{foutmelding}</p>}
+      {foutmelding && (
+        <p className="text-sm text-red-600 bg-red-50 rounded-lg px-3 py-2">{foutmelding}</p>
+      )}
       <button
         disabled={bezig}
-        className="rounded-full bg-pink-500 px-5 py-2 text-white font-semibold hover:bg-pink-600 transition disabled:opacity-50"
+        className="rounded-full bg-gradient-to-r from-pink-500 to-pink-600 px-5 py-2.5 text-white font-semibold shadow-glow hover:-translate-y-0.5 hover:shadow-xl transition disabled:opacity-50 disabled:translate-y-0"
       >
         {bezig ? "Bezig..." : "Cursus toevoegen"}
       </button>
