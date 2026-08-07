@@ -71,6 +71,25 @@ alter table lesson_progress enable row level security;
 create policy "Profiel: eigen rij lezen" on profiles for select using (auth.uid() = id);
 create policy "Profiel: eigen rij bijwerken" on profiles for update using (auth.uid() = id);
 
+-- Beveiliging: voorkomt dat een gebruiker via de update-policy hierboven
+-- zijn eigen 'role' naar 'admin' zet. Alleen wijzigingen via de service-role
+-- key (bv. handmatig in Supabase, of vanuit een trusted server-route) mogen
+-- de rol aanpassen.
+create or replace function public.voorkom_zelf_promotie_tot_admin()
+returns trigger as $$
+begin
+  if new.role is distinct from old.role and auth.role() <> 'service_role' then
+    new.role := old.role;
+  end if;
+  return new;
+end;
+$$ language plpgsql security definer;
+
+drop trigger if exists blokkeer_rol_wijziging on profiles;
+create trigger blokkeer_rol_wijziging
+  before update on profiles
+  for each row execute procedure public.voorkom_zelf_promotie_tot_admin();
+
 create policy "Cursussen: gepubliceerde cursussen zichtbaar" on courses
   for select using (gepubliceerd = true);
 
